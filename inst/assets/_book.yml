@@ -1,0 +1,18 @@
+book:
+  title: "OXA"
+  chapters:
+    - index.qmd
+    - pages/prior-knowledge-integration.qmd
+  cover-image: assets/cover.png
+  favicon: assets/favicon.png
+  sidebar: 
+    tools:
+      - icon: git
+        menu:
+          - text: Source Code
+            url:  https://github.com/dummy/OXA/
+          - text: Browse version `devel`
+            url:  https://dummy.github.io/OXA/devel/
+    style: "docked"
+    background: "light"
+    collapse-level: 5
