@@ -1,1 +1,211 @@
 # Prior Knowledge Integration
+
+```{r "setup", include=FALSE}
+library(reticulate)
+knitr::knit_engines$set(python = reticulate::eng_python)
+```
+
+`ariadne` (R) and `ariadnepy` (Python) give access to the same resource: a
+single graph assembled from public biological databases (Gene Ontology,
+KEGG, UniProt, BugSigDB, ChocoPhlAn, and more), which can be queried and
+traversed to link one type of biological identifier to another — for
+example, taxonomic names to functional pathways, or gene families to
+disease modules.
+
+This page walks through the same short analysis twice, once in R and once
+in Python, so you can follow along in whichever language you use.
+
+## Installation
+
+::: {.panel-tabset}
+
+## R
+
+```{r "install-r"}
+#| eval: false
+remotes::install_github("Minotau-R/ariadne")
+```
+
+## Python
+
+```{python "install-py"}
+#| eval: false
+pip install ariadnepy
+```
+
+:::
+
+## Building the resource graph
+
+Both packages expose a single entry point that downloads (and locally
+caches) the resource graph.
+
+::: {.panel-tabset}
+
+## R
+
+```{r "build-graph-r"}
+library(ariadne)
+
+graph <- ariadne()
+summary(graph)
+```
+
+## Python
+
+```{python "build-graph-py"}
+import ariadnepy
+
+graph = ariadnepy.ariadne()
+print(graph.summary())
+```
+
+:::
+
+## Searching for paths
+
+Before linking two resources, it helps to see which routes connect them.
+`searchPath()` / `search_path()` print the first `k` shortest paths.
+
+::: {.panel-tabset}
+
+## R
+
+```{r "search-path-r"}
+searchPath(graph, ko ~ ec, k = 3)
+```
+
+## Python
+
+```{python "search-path-py"}
+ariadnepy.search_path(graph, "ko ~ ec", k=3)
+```
+
+:::
+
+## Visualising a path
+
+`plotPath()` / `plot_path()` draw the full resource graph, highlighting a
+chosen path in red.
+
+::: {.panel-tabset}
+
+## R
+
+```{r "plot-path-r"}
+plotPath(graph, ko ~ ec, k = 1, prune = TRUE, focus = TRUE)
+```
+
+## Python
+
+```{python "plot-path-py"}
+fig = ariadnepy.plot_path(graph, "ko ~ ec", k=1, prune=True, focus=True)
+fig
+```
+
+:::
+
+## Weaving a linkmap
+
+`weavePath()` / `weave_path()` traverse the chosen path and return a
+two-column table mapping origin identifiers to target identifiers.
+
+::: {.panel-tabset}
+
+## R
+
+```{r "weave-path-r"}
+ko2ec <- weavePath(graph, ko ~ ec, k = 1)
+head(ko2ec)
+```
+
+## Python
+
+```{python "weave-path-py"}
+ko2ec = ariadnepy.weave_path(graph, "ko ~ ec", k=1)
+ko2ec.head()
+```
+
+:::
+
+`weavePath()` / `weave_path()` also accept a fixed path table (e.g. from
+`drawPath()` / `draw_path()`, see below) instead of the full graph, which
+skips path search entirely and re-runs just those steps — useful once
+you've settled on a route and want to reuse it with different `init` IDs.
+
+## Reproducibility: recording the path used
+
+`drawPath()` / `draw_path()` return the resource, version, and URL used at
+every hop of a path — handy for citing the exact data sources behind a
+result.
+
+::: {.panel-tabset}
+
+## R
+
+```{r "draw-path-r"}
+drawPath(graph, ko ~ ec, k = 1)
+```
+
+## Python
+
+```{python "draw-path-py"}
+ariadnepy.draw_path(graph, "ko ~ ec", k=1)
+```
+
+:::
+
+## Python only: annotating AnnData objects
+
+`ariadnepy` additionally provides `add_modules()` / `get_modules()`, which
+attach a linkmap as module-membership columns directly onto an `AnnData`
+object's `var` (features) or `obs` (samples) metadata — no R equivalent is
+needed here since `AnnData` is Python-specific. Any two-column linkmap
+works, whether it comes from `weave_path()`/`weave_complex()` or from
+elsewhere; the example below builds one by hand from the bundled
+butyrate-producer dataset, so it runs without any network access.
+
+```{python "anndata-py"}
+import anndata as ad
+import numpy as np
+
+butyrate = ariadnepy.load_butyrate()
+
+adata = ad.AnnData(
+    X=np.zeros((1, len(butyrate))),
+    var=butyrate.set_index("taxname"),
+)
+
+# A minimal linkmap: taxon -> a butyrate-production module ID.
+linkmap = butyrate[["taxname"]].assign(module="M_BUTYRATE")
+
+adata = ariadnepy.add_modules(adata, linkmap, key="index")
+adata.var.head()
+```
+
+## Session info
+
+::: {.callout-note collapse="true"}
+
+## Click to expand 👇
+
+::: {.panel-tabset}
+
+## R
+
+```{r "session-info-r"}
+#| cache: false
+sessioninfo::session_info(installed.packages()[, "Package"], include_base = TRUE)
+```
+
+## Python
+
+```{python "session-info-py"}
+import sys
+print(sys.version)
+print("ariadnepy", ariadnepy.__version__)
+```
+
+:::
+
+:::
