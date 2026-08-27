@@ -25,7 +25,8 @@ Suggests:
     BiocVersion,
     BiocStyle,
     glue,
-    knitr
+    knitr,
+    sessioninfo
 Remotes:
     github::Minotau-R/ariadne,
     github::Minotau-R/MultiFactor
