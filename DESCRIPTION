@@ -26,6 +26,7 @@ Suggests:
     BiocStyle,
     glue,
     knitr,
+    remotes,
     sessioninfo
 Remotes:
     github::Minotau-R/ariadne,
