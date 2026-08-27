@@ -17,15 +17,19 @@ BugReports: https://github.com/Minotau-R/OXA
 Depends:
     R (>= 4.3)
 Imports:
+    anansi,
+    ariadne,
+    MultiFactor
 Suggests:
     BiocManager,
     BiocVersion,
     BiocStyle,
     glue,
-    sessioninfo,
     knitr,
-    reticulate,
-    ariadne
+    sessioninfo
+Remotes:
+    github::Minotau-R/ariadne,
+    github::Minotau-R/MultiFactor
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 BiocType: Book

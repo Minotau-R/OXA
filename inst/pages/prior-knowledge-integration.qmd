@@ -15,26 +15,6 @@ disease modules.
 This page walks through the same short analysis twice, once in R and once
 in Python, so you can follow along in whichever language you use.
 
-## Installation
-
-::: {.panel-tabset}
-
-## R
-
-```{r "install-r"}
-#| eval: false
-remotes::install_github("Minotau-R/ariadne")
-```
-
-## Python
-
-```{python "install-py"}
-#| eval: false
-pip install ariadnepy
-```
-
-:::
-
 ## Building the resource graph
 
 Both packages expose a single entry point that downloads (and locally
@@ -116,7 +96,8 @@ two-column table mapping origin identifiers to target identifiers.
 
 ```{r "weave-path-r"}
 ko2ec <- weavePath(graph, ko ~ ec, k = 1)
-head(ko2ec)
+
+knitr::kable(ko2ec)
 ```
 
 ## Python
@@ -194,8 +175,7 @@ adata.var.head()
 ## R
 
 ```{r "session-info-r"}
-#| cache: false
-sessioninfo::session_info(installed.packages()[, "Package"], include_base = TRUE)
+sessionInfo()
 ```
 
 ## Python
