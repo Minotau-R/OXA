@@ -4,7 +4,7 @@ Description:
     This sentence is a placeholder. It should be changed by the author of 
     the package to describe the purpose of this BiocBook. 
     It should be at least 3 sentences otherwise `BiocCheck` will complain.
-Version: 0.98.0
+Version: 0.98.1
 Date: `r date()`
 Authors@R: 
     person(
@@ -15,18 +15,19 @@ Authors@R:
 URL: https://github.com/Minotau-R/OXA
 BugReports: https://github.com/Minotau-R/OXA
 Depends:
-    R (>= 4.3)
+    R (>= 4.6.0)
 Imports:
+Suggests:
     anansi,
     ariadne,
-    MultiFactor
-Suggests:
     BiocManager,
     BiocVersion,
     BiocStyle,
     glue,
     knitr,
+    MultiFactor,
     remotes,
+    reticulate,
     sessioninfo
 Remotes:
     github::Minotau-R/ariadne,
