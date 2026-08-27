@@ -18,14 +18,12 @@ Depends:
     R (>= 4.3)
 Imports:
 Suggests:
-    BiocManager,
-    BiocVersion,
-    BiocStyle,
+    BiocManager, 
+    BiocVersion, 
+    BiocStyle, 
     glue,
     sessioninfo,
-    knitr,
-    reticulate,
-    ariadne
+    knitr 
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 BiocType: Book
