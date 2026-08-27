@@ -31,6 +31,6 @@ jobs:
         has_runit: ${{ false }}
         has_latex: ${{ false }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run_docker: ${{ true }}
+        run_docker: ${{ false }}
         runner_os: ${{ runner.os }}
         cache_version: cache-v1
