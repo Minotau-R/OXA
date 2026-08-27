@@ -1,8 +1,10 @@
 name: 
-    BiocBook
+    OXA
 channels:
     - bioconda
     - conda-forge
     - defaults
 dependencies:
-    - python>=3.6
+    - python>=3.10
+    - ariadnepy>=0.2
+    - anndata>=0.10

@@ -34,3 +34,5 @@ jobs:
         run_docker: ${{ false }}
         runner_os: ${{ runner.os }}
         cache_version: cache-v1
+        miniforge_variant: ''
+        environment_file: inst/requirements.yml

@@ -125,13 +125,17 @@ result.
 ## R
 
 ```{r "draw-path-r"}
-drawPath(graph, ko ~ ec, k = 1)
+path_df <- drawPath(graph, ko ~ ec, k = 1)
+
+knitr::kable(path_df)
 ```
 
 ## Python
 
 ```{python "draw-path-py"}
-ariadnepy.draw_path(graph, "ko ~ ec", k=1)
+path_df = ariadnepy.draw_path(graph, "ko ~ ec", k=1)
+
+path_df
 ```
 
 :::
