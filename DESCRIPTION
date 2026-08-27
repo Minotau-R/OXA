@@ -25,10 +25,9 @@ Suggests:
     BiocVersion,
     BiocStyle,
     glue,
-    sessioninfo,
     knitr
 Remotes:
-    github::Minotau-R/ariadne
+    github::Minotau-R/ariadne,
     github::Minotau-R/MultiFactor
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

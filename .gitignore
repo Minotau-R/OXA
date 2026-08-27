@@ -1,0 +1,4 @@
+*.quarto
+*.Rhistory
+inst/docs/
+inst/pages/.ariadne_cache/
